@@ -1,13 +1,10 @@
 package priv.louis.live.controller
 
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseBody
-import priv.louis.live.mapper.UserMapper
-import priv.louis.live.service.CustomUserDetailsService
 
 @Controller
 @RequestMapping("/")
