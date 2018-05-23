@@ -19,19 +19,19 @@ class IndexController {
     @RequestMapping("/")
     fun index(model: Model): String {
         model.addAttribute("title", title);
-        return "index";
+        return "index"
     }
 
     @RequestMapping("/login")
     fun login(model: Model): String {
-        model.addAttribute("title", title);
-        model.addAttribute("login", "login");
-        return "index";
+        model.addAttribute("title", title)
+        model.addAttribute("login", "login")
+        return "index"
     }
 
     @RequestMapping("/profile")
     @ResponseBody
     fun profile(model: Model): String {
-        return this.profile;
+        return this.profile
     }
 }
