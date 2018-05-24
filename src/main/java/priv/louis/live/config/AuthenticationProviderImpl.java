@@ -1,14 +1,16 @@
 package priv.louis.live.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.stereotype.Component;
 import priv.louis.live.config.domain.AuthenticationTokenImpl;
 import priv.louis.live.config.domain.SessionUser;
 import priv.louis.live.service.RedisService;
 import priv.louis.live.service.UserService;
+import priv.louis.live.utils.Tools;
 import priv.louis.live.vo.User;
 
 import java.util.Collections;
@@ -16,6 +18,8 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class AuthenticationProviderImpl implements org.springframework.security.authentication.AuthenticationProvider {
+
+    private int expireHour;
 
     private UserService userService;
 
@@ -40,14 +44,14 @@ public class AuthenticationProviderImpl implements org.springframework.security.
 
         User user = new User();
         user = userService.getByName(username);
-        if (user != null && user.getId() != null) {
+        if (user != null && user.getId() != null && Tools.Companion.encoderByMd5(password).equals(user.getPassword())) {
             SessionUser u = new SessionUser();
             u.setUsername(username);
             u.setCreated(new Date());
             AuthenticationTokenImpl auth = new AuthenticationTokenImpl(u.getUsername(), Collections.emptyList());
             auth.setAuthenticated(true);
             auth.setDetails(u);
-            service.setValue(String.format("%s:%s", u.getUsername().toLowerCase(), auth.getHash()), u, TimeUnit.SECONDS, 3600L, true);
+            service.setValue(String.format("%s:%s", u.getUsername().toLowerCase(), auth.getHash()), u, true);
             return auth;
         } else {
 

@@ -22,9 +22,10 @@ import java.util.Map;
 @Service("tokenService")
 public class TokenAuthenticationService {
 
-    private RedisService service;
+    @Value("${token.expire.hour}")
+    private int expireHour;
 
-    private long EXPIRATIONTIME = 1000 * 60 * 60; // 1 hr
+    private RedisService service;
 
     private String secret;
 
@@ -47,7 +48,7 @@ public class TokenAuthenticationService {
         String JWT = Jwts.builder()
                 .setSubject(auth.getPrincipal().toString())
                 .setClaims(claims)
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
+                .setExpiration(new Date(System.currentTimeMillis() + expireHour * 1000 * 60 * 60))
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
         response.addHeader(headerString, tokenPrefix + " " + JWT);
