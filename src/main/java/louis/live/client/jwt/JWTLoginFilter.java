@@ -36,6 +36,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication)
             throws IOException, ServletException {
+        //add response header for jwt
         response.setHeader("Access-Control-Allow-Origin",request.getHeader("origin"));
         response.setHeader("Access-Control-Allow-Origin","*");  //允许跨域访问的域
         response.setHeader("Access-Control-Allow-Methods","*");  //允许使用的请求方法
