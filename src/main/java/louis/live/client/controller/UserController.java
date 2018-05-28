@@ -45,12 +45,14 @@ public class UserController {
 
     @RequestMapping("/add")
     @ResponseBody
-    public Map add(String userName, String password) {
+    public Map add(@RequestBody Map params) {
+        String username = params.get("username").toString();
+        String password = params.get("password").toString();
         Map result = new HashMap();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd ");
         User user = new User();
         user.setId(Tools.generateUUID());
-        user.setUserName(userName);
+        user.setUserName(username);
         user.setPassword(Tools.encoderByMd5(password));
         user.setStatus("1");
         user.setLastLoginDate(sdf.format(new Date()));
