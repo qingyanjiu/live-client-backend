@@ -38,6 +38,38 @@ public class LiveController {
     @Value("${live.server.hlsUrl}")
     private String hlsUrl;
 
+    @RequestMapping("/getSnapshotUrl")
+    @ResponseBody
+    public Map getSnapshotUrl() {
+        Map result = new HashMap();
+        result.put("snapshotUrl",snapshotUrl);
+        return result;
+    }
+
+    @RequestMapping("/getSmtpUrl")
+    @ResponseBody
+    public Map getSmtpUrl() {
+        Map result = new HashMap();
+        result.put("smtpUrl",streamUrl);
+        return result;
+    }
+
+    @RequestMapping("/getHttpflvUrl")
+    @ResponseBody
+    public Map getHttpflvUrl() {
+        Map result = new HashMap();
+        result.put("httpflvUrl",httpflvUrl);
+        return result;
+    }
+
+    @RequestMapping("/getHlsUrl")
+    @ResponseBody
+    public Map getHlsUrl() {
+        Map result = new HashMap();
+        result.put("hlsUrl",hlsUrl);
+        return result;
+    }
+
     @RequestMapping("/")
     @ResponseBody
     public List<LiveInfo> getAll() {
