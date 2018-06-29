@@ -9,4 +9,4 @@ FROM java:alpine
 WORKDIR /web
 COPY --from=0 /client/target/*.jar .
 EXPOSE 8000
-CMD java -jar -Dcustom.server.url=$CONFIG_SERVER_URL target/*.jar
+CMD java -jar -Dcustom.server.url=$CONFIG_SERVER_URL *.jar
